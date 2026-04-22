@@ -4,165 +4,112 @@
       <h3 class="card-title mb-4 text-center">股票／期貨 計算表單</h3>
 
       <form id="calcForm">
-        <!-- 第一列：台積電 -->
-        <div class="row mb-1 align-items-end">
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <label class="form-label">台積電</label>
+        @for (s of stocks; track s.name) {
+          <div class="row mb-1 align-items-end">
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <label class="form-label">{{ s.name }}</label>
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <input type="number" class="form-control" placeholder="股價"
+                     [(ngModel)]="s.price" [name]="'price-' + s.name" (ngModelChange)="calculate()">
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <input type="number" class="form-control" placeholder="口數"
+                     [(ngModel)]="s.qty" [name]="'qty-' + s.name" (ngModelChange)="calculate()">
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <select class="form-select" [(ngModel)]="s.marginPct" [name]="'marginPct-' + s.name" (ngModelChange)="calculate()">
+                <option [ngValue]="0" disabled hidden>保證金百分比</option>
+                <option [ngValue]="0.135">13.5%</option>
+                <option [ngValue]="0.162">16.2%</option>
+                <option [ngValue]="0.2025">20.25%</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <select class="form-select" [(ngModel)]="s.ratio" [name]="'ratio-' + s.name" (ngModelChange)="calculate()">
+                <option [ngValue]="0" disabled hidden>百分比</option>
+                <option [ngValue]="0.26">26%</option>
+                <option [ngValue]="0.5">50%</option>
+                <option [ngValue]="0.76">76%</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <select class="form-select" [(ngModel)]="s.pct" [name]="'pct-' + s.name" (ngModelChange)="calculate()">
+                <option [ngValue]="0" disabled hidden>隻數</option>
+                <option [ngValue]="1">1隻</option>
+                <option [ngValue]="1.9">2隻</option>
+                <option [ngValue]="2.71">3隻</option>
+                <option [ngValue]="3.439">4隻</option>
+                <option [ngValue]="4.0951">5隻</option>
+                <option [ngValue]="4.68559">6隻</option>
+              </select>
+            </div>
           </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="股價"
-                   [(ngModel)]="priceTsmc" name="priceTsmc" (ngModelChange)="calculate()">
+          <div class="row mb-3 align-items-end">
+            <div class="col-12 col-md-2"></div>
+            <div class="col-12 col-md-2"></div>
+            <div class="col-6 col-md-2"></div>
+            <div class="col-6 col-md-2"></div>
+            <div class="col-6 col-md-2 text-end">
+              <div class="form-label fw-bold text-info">{{ s.p1 }}</div>
+            </div>
+            <div class="col-6 col-md-2 text-end">
+              <div class="form-label fw-bold text-info">{{ s.p2 }}</div>
+            </div>
           </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="口數"
-                   [(ngModel)]="qtyTsmc" name="qtyTsmc" (ngModelChange)="calculate()">
-          </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <select class="form-select" [(ngModel)]="marginPctTsmc" name="marginPctTsmc" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>保證金百分比</option>
-              <option [ngValue]="0.135">13.5%</option>
-              <option [ngValue]="0.162">16.2%</option>
-              <option [ngValue]="0.2025">20.25%</option>
-            </select>
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="ratioTsmc" name="ratioTsmc" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>百分比</option>
-              <option [ngValue]="0.26">26%</option>
-              <option [ngValue]="0.5">50%</option>
-              <option [ngValue]="0.76">76%</option>
-            </select>
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="pctTsmc" name="pctTsmc" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>隻數</option>
-              <option [ngValue]="1">1隻</option>
-              <option [ngValue]="1.9">2隻</option>
-              <option [ngValue]="2.71">3隻</option>
-              <option [ngValue]="3.439">4隻</option>
-              <option [ngValue]="4.0951">5隻</option>
-              <option [ngValue]="4.68559">6隻</option>
-            </select>
-          </div>
-        </div>
-        <div class="row mb-3 align-items-end">
-          <div class="col-12 col-md-2"></div>
-          <div class="col-12 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p1Tsmc }}</div>
-          </div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p2Tsmc }}</div>
-          </div>
-        </div>
+        }
 
-        <!-- 第二列：台達電 -->
-        <div class="row mb-1 align-items-end">
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <label class="form-label">台達電</label>
+        @for (idx of indexes; track idx.name) {
+          <div class="row mb-1 align-items-end">
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <label class="form-label">{{ idx.name }}</label>
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <input type="number" class="form-control" placeholder="股價"
+                     [(ngModel)]="idx.price" [name]="'price-' + idx.name" (ngModelChange)="calculate()">
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <input type="number" class="form-control" placeholder="口數"
+                     [(ngModel)]="idx.qty" [name]="'qty-' + idx.name" (ngModelChange)="calculate()">
+            </div>
+            <div class="col-6 col-md-2 mb-1 mb-md-0">
+              <input type="number" class="form-control" placeholder="輸入保證金"
+                     [(ngModel)]="idx.margin" [name]="'margin-' + idx.name" (ngModelChange)="calculate()">
+            </div>
+            <div class="col-6 col-md-2">
+              <select class="form-select" [(ngModel)]="idx.ratio" [name]="'ratio-' + idx.name" (ngModelChange)="calculate()">
+                <option [ngValue]="0" disabled hidden>百分比</option>
+                <option [ngValue]="0.26">26%</option>
+                <option [ngValue]="0.5">50%</option>
+                <option [ngValue]="0.76">76%</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-2">
+              <select class="form-select" [(ngModel)]="idx.pct" [name]="'pct-' + idx.name" (ngModelChange)="calculate()">
+                <option [ngValue]="0" disabled hidden>隻數</option>
+                <option [ngValue]="1">1隻</option>
+                <option [ngValue]="1.9">2隻</option>
+                <option [ngValue]="2.71">3隻</option>
+                <option [ngValue]="3.439">4隻</option>
+                <option [ngValue]="4.0951">5隻</option>
+                <option [ngValue]="4.68559">6隻</option>
+              </select>
+            </div>
           </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="股價"
-                   [(ngModel)]="priceDelta" name="priceDelta" (ngModelChange)="calculate()">
+          <div class="row mb-3 align-items-end">
+            <div class="col-12 col-md-2"></div>
+            <div class="col-12 col-md-2"></div>
+            <div class="col-6 col-md-2"></div>
+            <div class="col-6 col-md-2"></div>
+            <div class="col-6 col-md-2 text-end">
+              <div class="form-label fw-bold text-info">{{ idx.p1 }}</div>
+            </div>
+            <div class="col-6 col-md-2 text-end">
+              <div class="form-label fw-bold text-info">{{ idx.p2 }}</div>
+            </div>
           </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="口數"
-                   [(ngModel)]="qtyDelta" name="qtyDelta" (ngModelChange)="calculate()">
-          </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <select class="form-select" [(ngModel)]="marginPctDelta" name="marginPctDelta" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>保證金百分比</option>
-              <option [ngValue]="0.135">13.5%</option>
-              <option [ngValue]="0.162">16.2%</option>
-              <option [ngValue]="0.2025">20.25%</option>
-            </select>
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="ratioDelta" name="ratioDelta" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>百分比</option>
-              <option [ngValue]="0.26">26%</option>
-              <option [ngValue]="0.5">50%</option>
-              <option [ngValue]="0.76">76%</option>
-            </select>
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="pctDelta" name="pctDelta" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>隻數</option>
-              <option [ngValue]="1">1隻</option>
-              <option [ngValue]="1.9">2隻</option>
-              <option [ngValue]="2.71">3隻</option>
-              <option [ngValue]="3.439">4隻</option>
-              <option [ngValue]="4.0951">5隻</option>
-              <option [ngValue]="4.68559">6隻</option>
-            </select>
-          </div>
-        </div>
-        <div class="row mb-3 align-items-end">
-          <div class="col-12 col-md-2"></div>
-          <div class="col-12 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p1Delta }}</div>
-          </div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p2Delta }}</div>
-          </div>
-        </div>
+        }
 
-        <!-- 第三列：台指期 -->
-        <div class="row mb-1 align-items-end">
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <label class="form-label">台指</label>
-          </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="股價"
-                   [(ngModel)]="priceTx" name="priceTx" (ngModelChange)="calculate()">
-          </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="口數"
-                   [(ngModel)]="qtyTx" name="qtyTx" (ngModelChange)="calculate()">
-          </div>
-          <div class="col-6 col-md-2 mb-1 mb-md-0">
-            <input type="number" class="form-control" placeholder="輸入保證金"
-                   [(ngModel)]="marginTx" name="marginTx" (ngModelChange)="calculate()">
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="ratioTx" name="ratioTx" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>百分比</option>
-              <option [ngValue]="0.26">26%</option>
-              <option [ngValue]="0.5">50%</option>
-              <option [ngValue]="0.76">76%</option>
-            </select>
-          </div>
-          <div class="col-6 col-md-2">
-            <select class="form-select" [(ngModel)]="pctTx" name="pctTx" (ngModelChange)="calculate()">
-              <option [ngValue]="0" disabled hidden>隻數</option>
-              <option [ngValue]="1">1隻</option>
-              <option [ngValue]="1.9">2隻</option>
-              <option [ngValue]="2.71">3隻</option>
-              <option [ngValue]="3.439">4隻</option>
-              <option [ngValue]="4.0951">5隻</option>
-              <option [ngValue]="4.68559">6隻</option>
-            </select>
-          </div>
-        </div>
-        <div class="row mb-3 align-items-end">
-          <div class="col-12 col-md-2"></div>
-          <div class="col-12 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2"></div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p1Tx }}</div>
-          </div>
-          <div class="col-6 col-md-2 text-end">
-            <div class="form-label fw-bold text-info">{{ p2Tx }}</div>
-          </div>
-        </div>
-
-        <!-- 第四列：綜合權益數（靠右） -->
         <div class="row g-3 mb-3">
           <div class="col-12 col-md-8"></div>
           <div class="col-6 col-md-2">
@@ -176,7 +123,6 @@
           </div>
         </div>
 
-        <!-- 第五列：正負數結果（靠右） -->
         <div class="row g-3 mb-3">
           <div class="col-12 col-md-8"></div>
           <div class="col-12 col-md-4 text-end">

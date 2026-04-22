@@ -1,6 +1,28 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+interface StockFutures {
+  name: string;
+  price: number;
+  qty: number;
+  marginPct: number;
+  ratio: number;
+  pct: number;
+  p1: string;
+  p2: string;
+}
+
+interface IndexFutures {
+  name: string;
+  price: number;
+  qty: number;
+  margin: number;
+  ratio: number;
+  pct: number;
+  p1: string;
+  p2: string;
+}
+
 @Component({
   selector: 'app-calc-form',
   imports: [FormsModule],
@@ -8,37 +30,17 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './calc-form.component.css'
 })
 export class CalcFormComponent {
-  // 台積電
-  priceTsmc = 0;
-  qtyTsmc = 0;
-  marginPctTsmc = 0;
-  ratioTsmc = 0;
-  pctTsmc = 0;
+  stocks: StockFutures[] = [
+    { name: '台積電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
+    { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
+    { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
+  ];
 
-  // 台達電
-  priceDelta = 0;
-  qtyDelta = 0;
-  marginPctDelta = 0;
-  ratioDelta = 0;
-  pctDelta = 0;
+  indexes: IndexFutures[] = [
+    { name: '台指', price: 0, qty: 0, margin: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
+  ];
 
-  // 台指期
-  priceTx = 0;
-  qtyTx = 0;
-  marginTx = 0;
-  ratioTx = 0;
-  pctTx = 0;
-
-  // 綜合權益數
   equity = 0;
-
-  // 計算結果
-  p1Tsmc = '--';
-  p2Tsmc = '--';
-  p1Delta = '--';
-  p2Delta = '--';
-  p1Tx = '--';
-  p2Tx = '--';
   total = '--';
   netResult = '-';
   netClass = 'text-success';
@@ -48,28 +50,29 @@ export class CalcFormComponent {
   }
 
   calculate(): void {
-    const p1_tsmc = this.roundToFixed(this.priceTsmc * 2000 * this.marginPctTsmc * this.ratioTsmc, 0);
-    const p_tsmc = this.priceTsmc * 0.1 * 2000;
-    const p2_tsmc = p1_tsmc + this.roundToFixed(p_tsmc * this.pctTsmc, 0);
-    const p2short_tsmc = Math.round(p2_tsmc * this.qtyTsmc / 10000);
-    this.p1Tsmc = String(p1_tsmc);
-    this.p2Tsmc = p2_tsmc + ' / ' + p2short_tsmc;
+    let totalRaw = 0;
 
-    const p1_delta = this.roundToFixed(this.priceDelta * 2000 * this.marginPctDelta * this.ratioDelta, 0);
-    const p_delta = this.priceDelta * 0.1 * 2000;
-    const p2_delta = p1_delta + this.roundToFixed(p_delta * this.pctDelta, 0);
-    const p2short_delta = Math.round(p2_delta * this.qtyDelta / 10000);
-    this.p1Delta = String(p1_delta);
-    this.p2Delta = p2_delta + ' / ' + p2short_delta;
+    for (const s of this.stocks) {
+      const p1 = this.roundToFixed(s.price * 2000 * s.marginPct * s.ratio, 0);
+      const p = s.price * 0.1 * 2000;
+      const p2 = p1 + this.roundToFixed(p * s.pct, 0);
+      const p2short = Math.round(p2 * s.qty / 10000);
+      s.p1 = String(p1);
+      s.p2 = p2 + ' / ' + p2short;
+      totalRaw += p2 * s.qty;
+    }
 
-    const p1_tx = this.roundToFixed(this.marginTx * this.ratioTx, 0);
-    const p_tx = this.priceTx * 0.1 * 200;
-    const p2_tx = p1_tx + this.roundToFixed(p_tx * this.pctTx, 0);
-    const p2short_tx = Math.round(p2_tx * this.qtyTx / 10000);
-    this.p1Tx = String(p1_tx);
-    this.p2Tx = p2_tx + ' / ' + p2short_tx;
+    for (const idx of this.indexes) {
+      const p1 = this.roundToFixed(idx.margin * idx.ratio, 0);
+      const p = idx.price * 0.1 * 200;
+      const p2 = p1 + this.roundToFixed(p * idx.pct, 0);
+      const p2short = Math.round(p2 * idx.qty / 10000);
+      idx.p1 = String(p1);
+      idx.p2 = p2 + ' / ' + p2short;
+      totalRaw += p2 * idx.qty;
+    }
 
-    const totalVal = this.roundToFixed((p2_tsmc * this.qtyTsmc) + (p2_delta * this.qtyDelta) + (p2_tx * this.qtyTx), 0);
+    const totalVal = this.roundToFixed(totalRaw, 0);
     this.total = String(totalVal);
 
     const net = this.roundToFixed(totalVal - this.equity, 0);
