@@ -53,7 +53,7 @@ export class CalcFormComponent {
     let totalRaw = 0;
 
     for (const s of this.stocks) {
-      const p1 = this.roundToFixed(s.price * 2000 * s.marginPct * s.ratio, 0);
+      const p1 = this.roundToFixed(s.price * 2000 * s.marginPct * (s.ratio / 100), 0);
       const p = s.price * 0.1 * 2000;
       const p2 = p1 + this.roundToFixed(p * s.pct, 0);
       const p2short = Math.round(p2 * s.qty / 10000);
@@ -63,7 +63,7 @@ export class CalcFormComponent {
     }
 
     for (const idx of this.indexes) {
-      const p1 = this.roundToFixed(idx.margin * idx.ratio, 0);
+      const p1 = this.roundToFixed(idx.margin * (idx.ratio / 100), 0);
       const p = idx.price * 0.1 * 200;
       const p2 = p1 + this.roundToFixed(p * idx.pct, 0);
       const p2short = Math.round(p2 * idx.qty / 10000);

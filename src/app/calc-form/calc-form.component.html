@@ -26,12 +26,9 @@
               </select>
             </div>
             <div class="col-6 col-md-2">
-              <select class="form-select" [(ngModel)]="s.ratio" [name]="'ratio-' + s.name" (ngModelChange)="calculate()">
-                <option [ngValue]="0" disabled hidden>百分比</option>
-                <option [ngValue]="0.26">26%</option>
-                <option [ngValue]="0.5">50%</option>
-                <option [ngValue]="0.76">76%</option>
-              </select>
+              <input type="number" class="form-control" placeholder="百分比"
+                     min="1" max="100"
+                     [(ngModel)]="s.ratio" [name]="'ratio-' + s.name" (ngModelChange)="calculate()">
             </div>
             <div class="col-6 col-md-2">
               <select class="form-select" [(ngModel)]="s.pct" [name]="'pct-' + s.name" (ngModelChange)="calculate()">
@@ -77,12 +74,9 @@
                      [(ngModel)]="idx.margin" [name]="'margin-' + idx.name" (ngModelChange)="calculate()">
             </div>
             <div class="col-6 col-md-2">
-              <select class="form-select" [(ngModel)]="idx.ratio" [name]="'ratio-' + idx.name" (ngModelChange)="calculate()">
-                <option [ngValue]="0" disabled hidden>百分比</option>
-                <option [ngValue]="0.26">26%</option>
-                <option [ngValue]="0.5">50%</option>
-                <option [ngValue]="0.76">76%</option>
-              </select>
+              <input type="number" class="form-control" placeholder="百分比"
+                     min="1" max="100"
+                     [(ngModel)]="idx.ratio" [name]="'ratio-' + idx.name" (ngModelChange)="calculate()">
             </div>
             <div class="col-6 col-md-2">
               <select class="form-select" [(ngModel)]="idx.pct" [name]="'pct-' + idx.name" (ngModelChange)="calculate()">
