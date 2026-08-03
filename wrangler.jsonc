@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "futures-tw",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    // Angular application builder 的輸出目錄
+    "directory": "./dist/futures-tw/browser",
+    // SPA：找不到的路徑一律回傳 index.html 交給 Angular Router
+    "not_found_handling": "single-page-application"
+  }
+}

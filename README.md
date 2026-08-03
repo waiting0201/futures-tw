@@ -36,6 +36,29 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Deployment (Cloudflare Workers)
+
+The app is hosted on Cloudflare Workers using [Static Assets](https://developers.cloudflare.com/workers/static-assets/). Configuration lives in `wrangler.jsonc`.
+
+```bash
+npm run preview   # build + run locally with `wrangler dev`
+npm run deploy    # build + `wrangler deploy`
+```
+
+First-time local deploys require `npx wrangler login`.
+
+CI/CD is handled by `.github/workflows/deploy-cloudflare.yml`:
+
+- push to `master` → `wrangler deploy` (production)
+- pull request → `wrangler versions upload` (preview version URL, no production traffic)
+
+Required GitHub repository secrets:
+
+| Secret | Where to get it |
+|--------|-----------------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens → template **Edit Cloudflare Workers** |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → Workers & Pages → Account ID |
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:

@@ -7,6 +7,7 @@
 - **架構**：純前端 SPA，不使用後端
 - **語言**：繁體中文介面
 - **樣式**：CSS（非 SCSS）
+- **部署**：Cloudflare Workers（Static Assets），設定檔 `wrangler.jsonc`
 
 ## 參考來源
 
@@ -24,4 +25,16 @@
 ```bash
 npm start       # 啟動開發伺服器 (ng serve)
 npm run build   # 建置生產版本 (ng build)
+npm run preview # 建置後用 wrangler dev 在本機模擬 Cloudflare 環境
+npm run deploy  # 建置後部署到 Cloudflare Workers
 ```
+
+## 部署（Cloudflare Workers）
+
+- 設定檔：`wrangler.jsonc`，以 Static Assets 方式託管 `dist/futures-tw/browser`，
+  `not_found_handling: "single-page-application"` 讓所有路徑 fallback 到 `index.html`。
+- CI：`.github/workflows/deploy-cloudflare.yml`
+  - push 到 `master` → `wrangler deploy`（正式）
+  - PR → `wrangler versions upload`（產生預覽版本網址，不影響正式流量）
+- 需要的 GitHub Secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`
+- 本機首次部署需先 `npx wrangler login`。
