@@ -34,6 +34,7 @@ export class CalcFormComponent {
     { name: '台積電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
     { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
     { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
+    { name: '大立光', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--' },
   ];
 
   indexes: IndexFutures[] = [
