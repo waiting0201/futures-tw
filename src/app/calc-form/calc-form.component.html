@@ -20,9 +20,9 @@
             <div class="col-6 col-md-2 mb-1 mb-md-0">
               <select class="form-select" [(ngModel)]="s.marginPct" [name]="'marginPct-' + s.name" (ngModelChange)="calculate()">
                 <option [ngValue]="0" disabled hidden>保證金百分比</option>
-                <option [ngValue]="0.135">13.5%</option>
-                <option [ngValue]="0.162">16.2%</option>
-                <option [ngValue]="0.2025">20.25%</option>
+                @for (m of s.marginOptions; track m.value) {
+                  <option [ngValue]="m.value">{{ m.label }}</option>
+                }
               </select>
             </div>
             <div class="col-6 col-md-2">
