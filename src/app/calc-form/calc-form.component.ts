@@ -6,6 +6,11 @@ interface MarginOption {
   value: number;
 }
 
+interface PctOption {
+  label: string;
+  value: number;
+}
+
 interface StockFutures {
   name: string;
   price: number;
@@ -16,6 +21,7 @@ interface StockFutures {
   p1: string;
   p2: string;
   marginOptions: MarginOption[];
+  pctOptions: PctOption[];
 }
 
 interface IndexFutures {
@@ -40,6 +46,24 @@ const MARGIN_OPTIONS_LARGAN: MarginOption[] = [
   { label: '24.3%', value: 0.243 },
 ];
 
+// 第 n 隻 = 1 + 0.9 + 0.9² + … + 0.9ⁿ⁻¹
+const PCT_OPTIONS: PctOption[] = [
+  { label: '1隻', value: 1 },
+  { label: '2隻', value: 1.9 },
+  { label: '3隻', value: 2.71 },
+  { label: '4隻', value: 3.439 },
+  { label: '5隻', value: 4.0951 },
+  { label: '6隻', value: 4.68559 },
+];
+
+const PCT_OPTIONS_LARGAN: PctOption[] = [
+  ...PCT_OPTIONS,
+  { label: '7隻', value: 5.217031 },
+  { label: '8隻', value: 5.6953279 },
+  { label: '9隻', value: 6.12579511 },
+  { label: '10隻', value: 6.513215599 },
+];
+
 @Component({
   selector: 'app-calc-form',
   imports: [FormsModule],
@@ -48,10 +72,10 @@ const MARGIN_OPTIONS_LARGAN: MarginOption[] = [
 })
 export class CalcFormComponent {
   stocks: StockFutures[] = [
-    { name: '台積電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS },
-    { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS },
-    { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS },
-    { name: '大立光', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS_LARGAN },
+    { name: '台積電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
+    { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
+    { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
+    { name: '大立光', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS_LARGAN, pctOptions: PCT_OPTIONS_LARGAN },
   ];
 
   indexes: IndexFutures[] = [

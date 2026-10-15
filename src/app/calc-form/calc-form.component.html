@@ -33,12 +33,9 @@
             <div class="col-6 col-md-2">
               <select class="form-select" [(ngModel)]="s.pct" [name]="'pct-' + s.name" (ngModelChange)="calculate()">
                 <option [ngValue]="0" disabled hidden>隻數</option>
-                <option [ngValue]="1">1隻</option>
-                <option [ngValue]="1.9">2隻</option>
-                <option [ngValue]="2.71">3隻</option>
-                <option [ngValue]="3.439">4隻</option>
-                <option [ngValue]="4.0951">5隻</option>
-                <option [ngValue]="4.68559">6隻</option>
+                @for (o of s.pctOptions; track o.value) {
+                  <option [ngValue]="o.value">{{ o.label }}</option>
+                }
               </select>
             </div>
           </div>
