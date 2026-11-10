@@ -56,7 +56,7 @@ const PCT_OPTIONS: PctOption[] = [
   { label: '6隻', value: 4.68559 },
 ];
 
-const PCT_OPTIONS_LARGAN: PctOption[] = [
+const PCT_OPTIONS_10: PctOption[] = [
   ...PCT_OPTIONS,
   { label: '7隻', value: 5.217031 },
   { label: '8隻', value: 5.6953279 },
@@ -73,9 +73,9 @@ const PCT_OPTIONS_LARGAN: PctOption[] = [
 export class CalcFormComponent {
   stocks: StockFutures[] = [
     { name: '台積電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
-    { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
-    { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS },
-    { name: '大立光', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS_LARGAN, pctOptions: PCT_OPTIONS_LARGAN },
+    { name: '台達電', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS_10 },
+    { name: '聯發科', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS, pctOptions: PCT_OPTIONS_10 },
+    { name: '大立光', price: 0, qty: 0, marginPct: 0, ratio: 0, pct: 0, p1: '--', p2: '--', marginOptions: MARGIN_OPTIONS_LARGAN, pctOptions: PCT_OPTIONS_10 },
   ];
 
   indexes: IndexFutures[] = [
